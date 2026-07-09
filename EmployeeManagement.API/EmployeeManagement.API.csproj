@@ -8,6 +8,11 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.9" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.9" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.9">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.OpenApi" Version="3.8.0" />
   </ItemGroup>
 
@@ -16,10 +21,13 @@
     <Folder Include="DTOs\" />
     <Folder Include="Helpers\" />
     <Folder Include="Interfaces\" />
-    <Folder Include="Model\" />
     <Folder Include="Repositories\" />
     <Folder Include="Services\" />
     <Folder Include="Utillities\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="EmployeeManagement.API.slnx" />
   </ItemGroup>
 
 </Project>
