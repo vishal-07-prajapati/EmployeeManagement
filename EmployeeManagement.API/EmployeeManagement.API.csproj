@@ -11,4 +11,15 @@
     <PackageReference Include="Microsoft.OpenApi" Version="3.8.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Data\" />
+    <Folder Include="DTOs\" />
+    <Folder Include="Helpers\" />
+    <Folder Include="Interfaces\" />
+    <Folder Include="Model\" />
+    <Folder Include="Repositories\" />
+    <Folder Include="Services\" />
+    <Folder Include="Utillities\" />
+  </ItemGroup>
+
 </Project>
