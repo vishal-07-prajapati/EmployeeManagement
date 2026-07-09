@@ -1,5 +1,6 @@
 using EmployeeManagement.API.Data;
 using EmployeeManagement.API.Interfaces;
+using EmployeeManagement.API.Middleware;
 using EmployeeManagement.API.Repositories;
 using EmployeeManagement.API.Services;
 using Microsoft.EntityFrameworkCore;
@@ -27,6 +28,8 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
+
+app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseHttpsRedirection();
 
