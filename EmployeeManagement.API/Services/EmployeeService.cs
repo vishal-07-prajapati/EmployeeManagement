@@ -38,7 +38,7 @@ namespace EmployeeManagement.API.Services
 
         public async Task<bool> UpdateEmployeeAsync(Employee employee)
         {
-            var existingEmployee = await _employeeRepository.GetByIdAsync(employee.Id);
+            var existingEmployee = await _employeeRepository.GetByIdAsync(employee.EmployeeId);
 
             if (existingEmployee == null)
                 return false;
