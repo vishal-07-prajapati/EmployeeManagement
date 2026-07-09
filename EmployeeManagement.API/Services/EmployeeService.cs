@@ -1,4 +1,6 @@
-﻿using EmployeeManagement.API.Interfaces;
+﻿using AutoMapper;
+using EmployeeManagement.API.DTOs.Employee;
+using EmployeeManagement.API.Interfaces;
 using EmployeeManagement.API.Models;
 using Microsoft.Extensions.Logging;
 
@@ -8,101 +10,71 @@ public class EmployeeService : IEmployeeService
 {
     private readonly IEmployeeRepository _employeeRepository;
     private readonly ILogger<EmployeeService> _logger;
-
+    private readonly IMapper _mapper;
     public EmployeeService(
         IEmployeeRepository employeeRepository,
-        ILogger<EmployeeService> logger)
+        ILogger<EmployeeService> logger,
+        IMapper mapper)
     {
         _employeeRepository = employeeRepository;
         _logger = logger;
+        _mapper = mapper;
     }
 
-    public async Task<IEnumerable<Employee>> GetAllEmployeesAsync()
+    public async Task<IEnumerable<EmployeeResponseDto>> GetAllEmployeesAsync()
     {
-        _logger.LogInformation("Fetching all employees.");
+        var employees = await _employeeRepository.GetAllAsync();
 
-        return await _employeeRepository.GetAllAsync();
+        return _mapper.Map<IEnumerable<EmployeeResponseDto>>(employees);
     }
 
-    public async Task<Employee?> GetEmployeeByIdAsync(int id)
+    public async Task<EmployeeResponseDto?> GetEmployeeByIdAsync(int id)
     {
-        _logger.LogInformation("Fetching employee with Id: {EmployeeId}", id);
+        var employee = await _employeeRepository.GetByIdAsync(id);
 
-        return await _employeeRepository.GetByIdAsync(id);
+        if (employee == null)
+            return null;
+
+        return _mapper.Map<EmployeeResponseDto>(employee);
     }
 
-    public async Task<Employee> CreateEmployeeAsync(Employee employee)
+    public async Task<EmployeeResponseDto> CreateEmployeeAsync(CreateEmployeeDto dto)
     {
-        _logger.LogInformation("Creating employee: {EmployeeName}", employee.Name);
-
-        if (string.IsNullOrWhiteSpace(employee.Name))
-            throw new ArgumentException("Employee name is required.");
-
-        if (employee.Salary < 0)
+        if (dto.Salary < 0)
             throw new ArgumentException("Salary cannot be negative.");
+
+        var employee = _mapper.Map<Models.Employee>(dto);
 
         employee.JoiningDate = DateTime.UtcNow;
         employee.IsActive = true;
 
-        var createdEmployee = await _employeeRepository.AddAsync(employee);
+        employee = await _employeeRepository.AddAsync(employee);
 
-        _logger.LogInformation(
-            "Employee created successfully with Id: {EmployeeId}",
-            createdEmployee.EmployeeId);
-
-        return createdEmployee;
+        return _mapper.Map<EmployeeResponseDto>(employee);
     }
 
-    public async Task<bool> UpdateEmployeeAsync(Employee employee)
+    public async Task<bool> UpdateEmployeeAsync(UpdateEmployeeDto dto)
     {
-        _logger.LogInformation("Updating employee: {EmployeeId}", employee.EmployeeId);
+        var employee = await _employeeRepository.GetByIdAsync(dto.Id);
 
-        var existingEmployee = await _employeeRepository.GetByIdAsync(employee.EmployeeId);
-
-        if (existingEmployee == null)
-        {
-            _logger.LogWarning(
-                "Employee not found with Id: {EmployeeId}",
-                employee.EmployeeId);
-
+        if (employee == null)
             return false;
-        }
 
-        existingEmployee.Name = employee.Name;
-        existingEmployee.Department = employee.Department;
-        existingEmployee.Email = employee.Email;
-        existingEmployee.Salary = employee.Salary;
-        existingEmployee.IsActive = employee.IsActive;
+        _mapper.Map(dto, employee);
 
-        await _employeeRepository.UpdateAsync(existingEmployee);
-
-        _logger.LogInformation(
-            "Employee updated successfully: {EmployeeId}",
-            employee.EmployeeId);
+        await _employeeRepository.UpdateAsync(employee);
 
         return true;
     }
 
     public async Task<bool> DeleteEmployeeAsync(int id)
     {
-        _logger.LogInformation("Deleting employee: {EmployeeId}", id);
-
         var employee = await _employeeRepository.GetByIdAsync(id);
 
         if (employee == null)
-        {
-            _logger.LogWarning(
-                "Employee not found with Id: {EmployeeId}",
-                id);
-
             return false;
-        }
 
         await _employeeRepository.DeleteAsync(employee);
-
-        _logger.LogInformation(
-            "Employee deleted successfully: {EmployeeId}",
-            id);
 
         return true;
     }

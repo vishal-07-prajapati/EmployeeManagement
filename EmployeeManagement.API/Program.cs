@@ -1,5 +1,6 @@
 using EmployeeManagement.API.Data;
 using EmployeeManagement.API.Interfaces;
+using EmployeeManagement.API.Mappings;
 using EmployeeManagement.API.Middleware;
 using EmployeeManagement.API.Repositories;
 using EmployeeManagement.API.Services;
@@ -16,6 +17,8 @@ builder.Services.AddOpenApi();
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddAutoMapper(typeof(EmployeeProfile));
 
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 

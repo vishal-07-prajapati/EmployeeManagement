@@ -1,17 +1,16 @@
-﻿using EmployeeManagement.API.Models;
+﻿using EmployeeManagement.API.DTOs.Employee;
 
-namespace EmployeeManagement.API.Interfaces
+namespace EmployeeManagement.API.Interfaces;
+
+public interface IEmployeeService
 {
-    public interface IEmployeeService
-    {
-        Task<IEnumerable<Employee>> GetAllEmployeesAsync();
+    Task<IEnumerable<EmployeeResponseDto>> GetAllEmployeesAsync();
 
-        Task<Employee?> GetEmployeeByIdAsync(int id);
+    Task<EmployeeResponseDto?> GetEmployeeByIdAsync(int id);
 
-        Task<Employee> CreateEmployeeAsync(Employee employee);
+    Task<EmployeeResponseDto> CreateEmployeeAsync(CreateEmployeeDto dto);
 
-        Task<bool> UpdateEmployeeAsync(Employee employee);
+    Task<bool> UpdateEmployeeAsync(UpdateEmployeeDto dto);
 
-        Task<bool> DeleteEmployeeAsync(int id);
-    }
+    Task<bool> DeleteEmployeeAsync(int id);
 }
