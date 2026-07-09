@@ -6,7 +6,7 @@ namespace EmployeeManagement.API.Models
     public class Employee
     {
         [Key]
-        public int Id { get; set; }
+        public int EmployeeId { get; set; }
 
         [Required]
         [MaxLength(100)]

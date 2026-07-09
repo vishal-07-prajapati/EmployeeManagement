@@ -13,6 +13,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.OpenApi" Version="2.7.5" />
     <!-- Removed Microsoft.OpenApi package: it conflicts with the ASP.NET OpenAPI source generator
          which targets different IOpenApi* types and causes generated code to assign to read-only
          properties (CS0200). The Microsoft.AspNetCore.OpenApi package provides the necessary
@@ -25,7 +26,7 @@
     <Folder Include="Interfaces\" />
     <Folder Include="Repositories\" />
     <Folder Include="Services\" />
-    <Folder Include="Utillities\" />
+    <Folder Include="Utilities\" />
   </ItemGroup>
 
   <ItemGroup>
