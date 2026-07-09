@@ -17,3 +17,9 @@ EmployeeManagement.API/.vs
 /EmployeeManagement.API/obj/EmployeeManagement.API.csproj.nuget.g.targets
 /EmployeeManagement.API/obj/project.assets.json
 /EmployeeManagement.API/obj/project.nuget.cache
+/EmployeeManagement.API/obj/Debug/net10.0/rpswa.dswa.cache.json
+/EmployeeManagement.API/obj/Debug/net10.0/rpswa.dswa.cache.json
+.vs
+debug
+obj
+/EmployeeManagement.API/obj/Debug/net10.0/rpswa.dswa.cache.json
