@@ -1,6 +1,6 @@
 ﻿using EmployeeManagement.API.Models;
 
-namespace EmployeeManagement.API.Services
+namespace EmployeeManagement.API.Interfaces
 {
     public interface IEmployeeService
     {
